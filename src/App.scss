@@ -1,0 +1,14 @@
+@import "./style/variable.scss";
+@import "~bootstrap/scss/bootstrap";
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300&display=swap");
+
+body {
+  font-family: "Nunito Sans", sans-serif;
+  margin: 0;
+}
+
+.app {
+  height: 100%;
+  min-height: 100vh;
+  background: var(--backgroundcolor);
+}

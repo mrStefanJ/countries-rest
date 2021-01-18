@@ -1,0 +1,29 @@
+// Screen size
+$break-s: 576px;
+$break-m: 768px;
+$break-l: 992px;
+$break-lm: 1024px;
+$break-xl: 1440px;
+
+// Color
+:root {
+    .dark{
+        --textcolor: hsl(0, 0%, 100%);
+        --backgroundcolor: hsl(207,26%, 17%);
+        --headerbackground: hsl(209,23%,22%);
+        --cardbeckground: hsl(209,23%,22%);
+        --button: hsl(209,23%,22%);
+        --searchcolor: hsl(0, 0%, 100%);
+        --shadow: hsl(207,26%, 17%);
+        }
+
+    .light{
+        --textcolor: hsl(207,26%, 17%);
+        --backgroundcolor: hsl(0, 0%, 98%);
+        --headerbackground: hsl(0, 0%, 100%);
+        --cardbeckground:hsl(0, 0%, 100%);
+        --button: hsl(0, 0%, 100%);
+        --searchcolor: hsl(0, 0%, 52%);
+        --shadow: hsl(0, 0%, 52%);
+    }
+}

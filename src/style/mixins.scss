@@ -1,0 +1,53 @@
+@import './variable.scss';
+
+$breakpointsMinWidth: (
+	'xs': null,
+	'sm': $break-s,
+	'md': $break-m,
+	'lg': $break-l,
+	'lm': $break-lm,
+	'xl': $break-xl,
+);
+
+$breakpointsMaxWidth: (
+	'xs': $break-s - 1px,
+	'sm': $break-m - 1px,
+	'md': $break-l - 1px,
+	'lg': $break-lm - 1px,
+	'lm': $break-xl -1px,
+	'xl': null
+);
+
+@mixin respond-to($media, $mediaTypes...) {
+	$minBreakpoint: map-get($breakpointsMinWidth, $media);
+    $maxBreakpoint: map-get($breakpointsMaxWidth, $media);
+    // Iterate through all arguments and get the smallest min and the largest max breakpoint
+	@each $mediaType in $mediaTypes {
+		$mediaTypeMaxBreakpoint: map-get($breakpointsMaxWidth, $mediaType);
+		@if ($minBreakpoint != null) {
+			$mediaTypeMinBreakpoint: map-get($breakpointsMinWidth, $mediaType);
+			@if (($mediaTypeMinBreakpoint == null) or ($minBreakpoint > $mediaTypeMinBreakpoint)) {
+				$minBreakpoint: $mediaTypeMinBreakpoint;
+			}
+		}
+		@if ($maxBreakpoint != null) {
+			$mediaTypeMaxBreakpoint: map-get($breakpointsMaxWidth, $mediaType);
+			@if (($mediaTypeMaxBreakpoint == null) or ($maxBreakpoint < $mediaTypeMaxBreakpoint)) {
+				$maxBreakpoint: $mediaTypeMaxBreakpoint;
+			}
+		}
+	}
+
+    @if (($minBreakpoint == null) and ($maxBreakpoint != null)) {
+		@media only screen and (max-width: $maxBreakpoint) { @content; }
+	}
+	@else if (($minBreakpoint != null) and ($maxBreakpoint != null)) {
+		@media only screen and (min-width: $minBreakpoint) and (max-width: $maxBreakpoint) { @content; }
+	}
+	@else if (($minBreakpoint != null) and ($maxBreakpoint == null)) {
+		@media only screen and (min-width: $minBreakpoint) { @content; }
+	}
+	@else {
+		@content;
+	}
+}

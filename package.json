@@ -1,0 +1,54 @@
+{
+  "name": "my-task",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "axios": "^0.21.1",
+    "bootstrap": "^4.5.3",
+    "font-awesome": "^4.7.0",
+    "fuse.js": "^6.4.6",
+    "node-sass": "4.14.1",
+    "prop-types": "15.7.2",
+    "react": "^17.0.1",
+    "react-bootstrap": "^1.4.3",
+    "react-dom": "^17.0.1",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.1",
+    "sass": "^1.32.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "fix:js": "eslint -c .eslintrc.js --fix \"**/*.*(js)\"",
+    "fix:scss": "stylelint --fix **/*.scss",
+    "lint:js": "eslint -c .eslintrc.js \"**/*.*(js)\"",
+    "lint:scss": "stylelint **/*.scss"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "eslint": "7.18.0",
+    "eslint-config-airbnb": "18.2.1",
+    "eslint-plugin-import": "2.22.1",
+    "eslint-plugin-jsx-a11y": "6.4.1",
+    "eslint-plugin-react": "7.22.0",
+    "eslint-plugin-react-hooks": "4.2.0",
+    "stylelint": "13.8.0",
+    "stylelint-config-standard": "20.0.0"
+  }
+}

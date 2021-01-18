@@ -1,0 +1,66 @@
+@import "../../style/mixins.scss";
+@import "../../style/variable.scss";
+
+.countries-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  @include respond-to('lg','xl'){
+    justify-content: space-between;
+  }
+}
+.countries-list__card {
+  width: 350px;
+  margin-bottom: 74px;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: var(--cardbeckground);
+  box-shadow: 0px 1px 5px var(--shadow);
+  @include respond-to('lg','xl'){
+    width: 300px;
+  }
+  &:hover {
+    text-decoration: none;
+  }
+}
+.countries-list__card-flag {
+  height: 200px;
+  .countries-list__card-flag-size {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.countries-list__card-details {
+  padding: 0 24px;
+  padding-top: 56px;
+  padding-bottom: 46px;
+  @include respond-to('lg','xl'){
+    padding-top: 30px;
+    padding-bottom: 46px;
+  }
+}
+
+.countries-list__card-name {
+  margin-bottom: 20px;
+  color: var(--textcolor);
+  font-weight: bold;
+  font-size: 26px;
+  line-height: 32px;
+}
+
+.countries-list__card-text {
+  margin-bottom: 10px;
+  color: var(--textcolor);
+  font-weight: bold;
+}
+
+.countries-list__cart-text-value {
+  font-weight: 400;
+  margin-left: 8px;
+  @include respond-to('lg','xl'){
+    margin-left: 4px;
+  }
+}
