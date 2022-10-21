@@ -8,7 +8,7 @@ const Filter = ({ countries, setCountries }) => {
   const [selectRegion, setSelectRegion] = useState('default');
   const [showOptions, setShowOptions] = useState(false);
   const ref = useRef(null);
-
+  
   // Select region
   useEffect(() => {
     if (selectRegion === 'default') {
@@ -29,7 +29,7 @@ const Filter = ({ countries, setCountries }) => {
 
   // SearchTerm country
   useEffect(() => {
-    if (searchTerm === '' || (searchTerm && searchTerm.length < 2)) {
+    if (searchTerm === '' || (searchTerm && searchTerm.length <= 2)) {
       setCountries(countries);
       return;
     }
@@ -39,10 +39,11 @@ const Filter = ({ countries, setCountries }) => {
       minMatchCharLength: searchTerm.length,
       threshold: 0.1,
       // SearchTerm in `region`, `name` and  `capital`
-      keys: ['region', 'name', 'capital'],
+      keys: ['region', 'name.common', ['capital']],
     };
 
     const fuse = new Fuse(countries, option);
+    console.log(fuse);
     setCountries(fuse.search(searchTerm));
   }, [searchTerm]);
 
@@ -84,17 +85,13 @@ const Filter = ({ countries, setCountries }) => {
       value: 'Oceania',
       name: 'Oceania',
     },
-    {
-      value: 'Polar',
-      name: 'Polar',
-    },
   ];
   return (
     <div className="filter">
       <div className="filter__search-wrappper">
         <input
           className="filter__search"
-          type="search"
+          type="text"
           name="searchTerm"
           value={searchTerm}
           placeholder="Search for a country"

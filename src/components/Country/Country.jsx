@@ -11,7 +11,8 @@ const Country = () => {
   const { name } = useParams();
 
   const fetchCountryData = async () => {
-    const result = await axios(`https://restcountries.eu/rest/v2/name/${name}`);
+    const result = await axios(`https://restcountries.com/v3.1/name/${name}`);
+    console.log(result.data);
     if (result.data[0].borders.length > 0) {
       let countriesName = '';
       result.data[0].borders.forEach((border, index) => {
@@ -21,9 +22,10 @@ const Country = () => {
           countriesName += `${border};`;
         }
       });
-      const borders = await axios(`https://restcountries.eu/rest/v2/alpha?codes=${countriesName}`);
-      setBorderCountries(borders.data);
+      // const borders = await axios(`https://restcountries.com/v3.1/alpha?codes=${countriesName}`);
+      // setBorderCountries(borders);
     }
+
     setCountry(result.data);
   };
 
@@ -40,53 +42,62 @@ const Country = () => {
             <i className="fas fa-arrow-left" />
             <span className="country__back-btn-text">Back</span>
           </Link>
-          {country.map((item) => (
-            <Row key={item.numericCode}>
-              <Col xs={12} xl={6}>
-                <div className="country__flag-wrapper">
-                  <img src={item.flag} className="country__flag" alt={item.name} />
-                </div>
-              </Col>
-              <Col xs={12} xl={6}>
-                <div className="country__details-wrapper">
-                  <h1 className="country__name">{item.name}</h1>
-                  <div className="country__details">
-                    <div className="country__col">
-                      <p className="country__info">
-                        Native Name: <span className="country__info-value">{item.nativeName}</span>
-                      </p>
-                      <p className="country__info">
-                        Population: <span className="country__info-value">{item.population}</span>
-                      </p>
-                      <p className="country__info">
-                        Region: <span className="country__info-value">{item.region}</span>
-                      </p>
-                      <p className="country__info">
-                        Sub Region: <span className="country__info-value">{item.subregion}</span>
-                      </p>
-                      <p className="country__info">
-                        Capital: <span className="country__info-value">{item.capital}</span>
-                      </p>
-                    </div>
-                    <div className="country__col">
-                      <p className="country__info">
-                        Top Level Domain: <span className="country__info-value">{item.topLevelDomain}</span>
-                      </p>
-                      <p className="country__info">
-                        Currencies:
-                        {item.currencies.map((currency) => (
-                          <span key={currency.code} className="country__info-value">{currency.name}</span>
-                        ))}
-                      </p>
-                      <p className="country__info">
-                        Languages:
-                        {item.languages.map((language) => (
-                          <span key={language.iso639_1} className="country__info-value">{language.name}</span>
-                        ))}
-                      </p>
-                    </div>
+          {country.map((item) => {
+            const currencyKey = Object.keys(item.currencies);
+            const nativeNameKey = Object.keys(item.name.nativeName);
+            const languageKey = Object.keys(item.languages);
+
+            console.log(currencyKey, item.currencies[currencyKey[0]])
+            return (
+              <Row key={item.ccn3}>
+                <Col xs={12} xl={6}>
+                  <div className="country__flag-wrapper">
+                    <img src={item.flags.png} className="country__flag" alt={item.name.common} />
                   </div>
-                  {borderCountries.length > 0
+                </Col>
+                <Col xs={12} xl={6}>
+                  <div className="country__details-wrapper">
+                    <h1 className="country__name">{item.name.common}</h1>
+                    <div className="country__details">
+                      <div className="country__col">
+                        <p className="country__info">
+                          Native Name:
+                          {nativeNameKey.map((name) => (
+                            <span key={name} className="country__info-value">{item.name.nativeName[name].official}</span>
+                          ))}
+                        </p>
+                        <p className="country__info">
+                          Population: <span className="country__info-value">{item.population}</span>
+                        </p>
+                        <p className="country__info">
+                          Region: <span className="country__info-value">{item.region}</span>
+                        </p>
+                        <p className="country__info">
+                          Sub Region: <span className="country__info-value">{item.subregion}</span>
+                        </p>
+                        <p className="country__info">
+                          Capital: <span className="country__info-value">{item.capital}</span>
+                        </p>
+                      </div>
+                      <div className="country__col">
+                        <p className="country__info">
+                          Top Level Domain: <span className="country__info-value">{item.tld}</span>
+                        </p>
+                        <p className="country__info">
+                          Currencies:
+                          {currencyKey.map((currency) => (
+                            <span key={currency} className="country__info-value">{item.currencies[currency].symbol}</span>
+                          ))}
+                        </p>
+                        <p className="country__info">
+                          Languages:
+                          {languageKey.map((lang) => (
+                            <span key={lang} className="country__info-value">{item.languages[lang]}</span>
+                          ))}
+                        </p>
+                      </div>
+                    </div>
+                    {/* {borderCountries.length > 0
                     && <div className="country__borders-wrapper">
                       <h3 className="country__borders-title country__borders-title--md-hide">Border Countries:</h3>
                       <div className="country__borders-list">
@@ -96,11 +107,12 @@ const Country = () => {
                         ))}
                       </div>
                     </div>
-                  }
-                </div>
-              </Col>
-            </Row>
-          ))}
+                  } */}
+                  </div>
+                </Col>
+              </Row>
+            )
+          })}
         </section>
       </Col>
     </Row>
