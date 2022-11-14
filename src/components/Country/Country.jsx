@@ -12,18 +12,17 @@ const Country = () => {
 
   const fetchCountryData = async () => {
     const result = await axios(`https://restcountries.com/v3.1/name/${name}`);
-    console.log(result.data);
-    if (result.data[0].borders.length > 0) {
+    if ('borders' in result.data[0]) {
       let countriesName = '';
       result.data[0].borders.forEach((border, index) => {
         if (index === result.data[0].borders - 1) {
-          countriesName += `${border}`;
+          countriesName += `${border.toLowerCase()}`;
         } else {
-          countriesName += `${border};`;
+          countriesName += `${border.toLowerCase()},`;
         }
       });
-      // const borders = await axios(`https://restcountries.com/v3.1/alpha?codes=${countriesName}`);
-      // setBorderCountries(borders);
+      const borders = await axios(`https://restcountries.com/v3.1/alpha?codes=${countriesName}`);
+      setBorderCountries(borders);
     }
 
     setCountry(result.data);
@@ -34,6 +33,10 @@ const Country = () => {
     // eslint-disable-next-line
   }, [name]);
 
+  if (!country) {
+    return null;
+  }
+
   return (
     <Row>
       <Col xs={12}>
@@ -42,12 +45,11 @@ const Country = () => {
             <i className="fas fa-arrow-left" />
             <span className="country__back-btn-text">Back</span>
           </Link>
-          {country.map((item) => {
+          {country && country.map((item) => {
             const currencyKey = Object.keys(item.currencies);
             const nativeNameKey = Object.keys(item.name.nativeName);
             const languageKey = Object.keys(item.languages);
 
-            console.log(currencyKey, item.currencies[currencyKey[0]])
             return (
               <Row key={item.ccn3}>
                 <Col xs={12} xl={6}>
@@ -97,17 +99,19 @@ const Country = () => {
                         </p>
                       </div>
                     </div>
-                    {/* {borderCountries.length > 0
-                    && <div className="country__borders-wrapper">
-                      <h3 className="country__borders-title country__borders-title--md-hide">Border Countries:</h3>
-                      <div className="country__borders-list">
-                        <h3 className="country__borders-title country__borders-title--md-show">Border Countries:</h3>
-                        {borderCountries.map((border) => (
-                          <Link to={`/countries/${border.name}`} key={border.alpha2Code} className="country__borders-item">{border.name}</Link>
-                        ))}
-                      </div>
+
+                    <div className="country__borders-wrapper">
+                      {borderCountries.length === 0 ?
+                        <h3 className="country__borders-title country__borders-title--md-hide">Border Countries: None</h3>
+                        :
+                        <div className="country__borders-list">
+                          <h3 className="country__borders-title country__borders-title--md-show">Border Countries:</h3>
+                          {borderCountries.data.map((border) => (
+                            <Link to={`/countries/${border.name.common}`} key={`${border.cca3}`} className="country__borders-item">{border.name.common}</Link>
+                          ))}
+                        </div>
+                      }
                     </div>
-                  } */}
                   </div>
                 </Col>
               </Row>
